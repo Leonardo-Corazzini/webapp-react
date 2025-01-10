@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import DefaultLayout from "./layouts/defaultlayout";
 import HomePage from "./pages/homePage";
-import MoviePage from "./pages/MoviePage";
+import MoviePage from "./pages/Movie/MoviePage";
 import About from "./pages/About";
 import Contact from "./pages/ContaCT.JSX";
 
