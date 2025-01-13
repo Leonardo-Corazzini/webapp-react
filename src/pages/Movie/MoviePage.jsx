@@ -3,16 +3,20 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import style from './MoviePage.module.css'
 import ReviewCard from '../../components/ReviewCard/ReviewCard';
+import FormReview from '../../components/FormReview/FormReview';
 
 export default function MoviePage() {
     const [movie, setMovie] = useState([])
     const { id } = useParams()
+    function fetchData() {
+        axios.get(`http://localhost:3000/api/movies/${id}`)
+            .then(res => {
+                setMovie(res.data)
+            }).catch(err => {
+                console.log(err)
+            })
+    }
     useEffect(() => {
-        async function fetchData() {
-            const { data } = await axios.get(`http://localhost:3000/api/movies/${id}`)
-            console.log(data)
-            setMovie(data)
-        }
         fetchData()
 
     }, [id])
@@ -48,6 +52,9 @@ export default function MoviePage() {
                         ))}
                     </ul> :
                     <div>Nessuna recensione</div>}
+            </section>
+            <section>
+                <FormReview id={id} onSuccess={fetchData} />
             </section>
 
         </>
