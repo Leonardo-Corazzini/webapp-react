@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { useContext } from 'react';
+import globalContext from '../../context/globalContext';
 
 const initialFormData = {
     vote: 1,
@@ -10,6 +12,7 @@ const initialFormData = {
 function FormReview({ id, onSuccess = () => { } }) {
 
     const [formData, setFormData] = useState(initialFormData)
+    const { setIsLoading } = useContext(globalContext)
 
     function onFormChange(e) {
         const { value, name } = e.target
@@ -25,7 +28,7 @@ function FormReview({ id, onSuccess = () => { } }) {
 
     function storeReview(e) {
         e.preventDefault()
-
+        setIsLoading(true)
 
         axios.post(`http://localhost:3000/api/movies/${id}/reviews`, formData)
             .then(res => {
@@ -34,6 +37,8 @@ function FormReview({ id, onSuccess = () => { } }) {
                 onSuccess()
             }).catch(err => {
                 console.log(err)
+            }).finally(() => {
+                setIsLoading(false)
             })
     }
 

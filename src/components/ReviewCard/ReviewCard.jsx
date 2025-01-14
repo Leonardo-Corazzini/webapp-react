@@ -1,14 +1,15 @@
+import style from "./ReviewCard.module.css"
 function ReviewCard({ review }) {
 
     const { vote, name, text } = review
     return (
-        <div className=''>
-            <p className=''>{text}</p>
-            <div className=''>
+        <div className={style.card}>
+            <p className={style.text}>{text}</p>
+            <div className={style.vote}>
                 <strong>Voto:{vote}</strong>
             </div>
-            <div className=''>
-                By {name}
+            <div className={style.name}>
+                - {name}
             </div>
         </div>
     )

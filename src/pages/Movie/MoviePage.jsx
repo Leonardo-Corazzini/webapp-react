@@ -4,17 +4,25 @@ import axios from 'axios';
 import style from './MoviePage.module.css'
 import ReviewCard from '../../components/ReviewCard/ReviewCard';
 import FormReview from '../../components/FormReview/FormReview';
+import { useContext } from 'react';
+import globalContext from '../../context/globalContext';
 
 export default function MoviePage() {
     const [movie, setMovie] = useState([])
     const { id } = useParams()
+    const { setIsLoading } = useContext(globalContext)
     function fetchData() {
+        setIsLoading(true)
         axios.get(`http://localhost:3000/api/movies/${id}`)
             .then(res => {
                 setMovie(res.data)
             }).catch(err => {
                 console.log(err)
+            }).finally(() => {
+                setIsLoading(false)
             })
+
+
     }
     useEffect(() => {
         fetchData()
